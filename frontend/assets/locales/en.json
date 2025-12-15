@@ -1,0 +1,14 @@
+{
+    "welcome": "Welcome to Haryana Roadways",
+    "search_dest": "Where do you want to go?",
+    "find_buses": "Find Buses",
+    "wake_up_alert": "Wake up, {{name}}! Your stop {{stop}} is next.",
+    "snooze": "Snooze 1 min",
+    "im_awake": "I'm Awake",
+    "mismatch_alert": "You are far from pickup point! Catch next bus?",
+    "view_alternates": "View Alternates",
+    "offline_mode": "You are offline. Showing cached ticket.",
+    "derived_loc_consent": "Share location to help track bus?",
+    "ticket_valid": "Valid Ticket",
+    "ticket_invalid": "Invalid Ticket"
+}

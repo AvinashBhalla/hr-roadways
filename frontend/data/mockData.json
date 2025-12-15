@@ -1,0 +1,20 @@
+{
+    "user": {
+        "id": "user_123",
+        "name": "Amit Sharma"
+    },
+    "buses": [
+        {
+            "bus_id": "BUS_42",
+            "route_id": "KRL-CHD-01",
+            "departure_time": "07:00",
+            "status": "ON_ROUTE"
+        },
+        {
+            "bus_id": "BUS_43",
+            "route_id": "KRL-CHD-02",
+            "departure_time": "08:00",
+            "status": "SCHEDULED"
+        }
+    ]
+}

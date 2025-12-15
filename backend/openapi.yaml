@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: HR Roadways API
+  version: 1.0.0
+  description: API for Passenger and Driver Apps
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/buses:
+    get:
+      summary: Find buses
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: string
+        - name: to
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of buses
+  /api/book:
+    post:
+      summary: Book a ticket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, bus_id, pickup_id]
+              properties:
+                user_id: 
+                  type: string
+                bus_id:
+                  type: string
+                pickup_id:
+                  type: string
+                drop_id:
+                  type: string
+      responses:
+        '200':
+          description: Signed Ticket
+  /api/verify:
+    post:
+      summary: Verify a ticket signature
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticketData:
+                  type: object
+                signature:
+                  type: string
+      responses:
+        '200':
+          description: Verification result
+  /api/gps-callback:
+    post:
+      summary: Send passenger location for derived bus tracking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bus_id: {type: string}
+                user_id: {type: string}
+                lat: {type: number}
+                lng: {type: number}
+      responses:
+        '200':
+          description: Ack
