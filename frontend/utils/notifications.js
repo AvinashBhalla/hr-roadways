@@ -11,9 +11,12 @@ Notifications.setNotificationHandler({
 });
 
 export const scheduleWakeUpAlert = async (stopName, userName) => {
-  // TTS Announce (Immediate if close, but here scheduling/triggering)
-  // Logic: In real app, triggered by location update background task.
-  
+  if (Platform.OS === 'web') {
+    console.log(`[WEB ALERT] Wake up, ${userName}! Your stop ${stopName} is next.`);
+    alert(`Wake up, ${userName}! Your stop ${stopName} is next!`);
+    return;
+  }
+
   // 1. Push Notification
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -21,7 +24,7 @@ export const scheduleWakeUpAlert = async (stopName, userName) => {
       body: `Your stop ${stopName} is next!`,
       data: { type: 'WAKE_UP' },
     },
-    trigger: null, // trigger immediately for demo
+    trigger: null, 
   });
 
   // 2. TTS
