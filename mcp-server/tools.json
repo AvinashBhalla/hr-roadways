@@ -1,0 +1,82 @@
+{
+    "tools": [
+        {
+            "name": "find_buses",
+            "description": "Find buses between two locations",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string"
+                    },
+                    "to": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "from",
+                    "to"
+                ]
+            }
+        },
+        {
+            "name": "book_ticket",
+            "description": "Book a ticket for a user on a specific bus",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "bus_id": {
+                        "type": "string"
+                    },
+                    "pickup_id": {
+                        "type": "string"
+                    },
+                    "drop_id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "user_id",
+                    "bus_id"
+                ]
+            }
+        },
+        {
+            "name": "get_ticket_status",
+            "description": "Get the status of a specific ticket",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "ticket_id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ticket_id"
+                ]
+            }
+        },
+        {
+            "name": "verify_ticket",
+            "description": "Verify a ticket's signature",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "ticket_data": {
+                        "type": "string"
+                    },
+                    "signature": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ticket_data",
+                    "signature"
+                ]
+            }
+        }
+    ]
+}
