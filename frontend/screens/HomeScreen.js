@@ -1,43 +1,124 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Switch } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { Text, Card, Button, Avatar, useTheme, IconButton } from 'react-native-paper';
+import Layout from '../components/Layout';
+import { useAuth } from '../utils/AuthContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function HomeScreen({ navigation }) {
-  const { t, i18n } = useTranslation();
+  const { user, signOut } = useAuth();
+  const theme = useTheme();
 
-  const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'hi' : 'en');
-  };
+  const ActionCard = ({ title, icon, onPress, color }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.actionCard, { backgroundColor: theme.colors.surface }]}>
+      <View style={[styles.iconContainer, { backgroundColor: color + '20' }]}>
+        <MaterialCommunityIcons name={icon} size={32} color={color} />
+      </View>
+      <Text variant="titleMedium" style={styles.actionTitle}>{title}</Text>
+    </TouchableOpacity>
+  );
 
   return (
-    <View style={styles.container}>
+    <Layout>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('welcome')}</Text>
-        <Button title={i18n.language.toUpperCase()} onPress={toggleLang} />
+        <View>
+          <Text variant="titleMedium" style={{ color: '#666' }}>Welcome Back,</Text>
+          <Text variant="headlineMedium" style={{ fontWeight: 'bold', color: theme.colors.primary }}>Passenger</Text>
+        </View>
+        <TouchableOpacity onPress={signOut}>
+          <Avatar.Icon size={40} icon="logout" style={{ backgroundColor: theme.colors.surfaceVariant }} />
+        </TouchableOpacity>
       </View>
 
-      <Text style={styles.label}>{t('search_dest')}</Text>
-      {/* Mock Search Input */}
-      <View style={styles.searchBox}>
-        <Text style={{color:'#888'}}>Karnal -> Chandigarh</Text>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
 
-      <Button 
-        title={t('find_buses')} 
-        onPress={() => navigation.navigate('BusList', { from: 'Karnal', to: 'Chandigarh' })} 
-      />
-      
-      <View style={{marginTop: 20}}>
-         <Button title="Driver Mode" color="orange" onPress={() => navigation.navigate('DriverVerify')} />
-      </View>
-    </View>
+        {/* Banner */}
+        <Card style={styles.bannerCard} mode="contained">
+          <Card.Content>
+            <Text variant="titleLarge" style={{ color: '#fff', fontWeight: 'bold' }}>Plan Your Journey</Text>
+            <Text variant="bodyMedium" style={{ color: '#E0E0E0', marginTop: 5 }}>Safe, Comfortable, and On Time.</Text>
+            <Button mode="contained" buttonColor="#fff" textColor={theme.colors.primary} style={styles.bannerButton} onPress={() => navigation.navigate('BusList')}>
+              Book Now
+            </Button>
+          </Card.Content>
+        </Card>
+
+        {/* Quick Actions */}
+        <Text variant="titleLarge" style={styles.sectionTitle}>Quick Actions</Text>
+        <View style={styles.grid}>
+          <ActionCard title="Book Bus" icon="bus" color={theme.colors.primary} onPress={() => navigation.navigate('BusList')} />
+          <ActionCard title="My Tickets" icon="ticket-confirmation" color={theme.colors.tertiary} onPress={() => navigation.navigate('Ticket')} />
+          <ActionCard title="Track Bus" icon="map-marker-radius" color={theme.colors.secondary} onPress={() => { }} />
+          <ActionCard title="Support" icon="headset" color="#4CAF50" onPress={() => navigation.navigate('Complaint')} />
+        </View>
+
+        {/* Recent Activity or Promos */}
+        <Text variant="titleLarge" style={styles.sectionTitle}>Offers For You</Text>
+        <Card style={styles.offerCard}>
+          <Card.Cover source={{ uri: 'https://picsum.photos/700' }} style={{ height: 150 }} />
+          <Card.Content style={{ paddingVertical: 10 }}>
+            <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>Get 20% Off on First Ride</Text>
+            <Text variant="bodySmall">Use Code: HRROADWAYS20</Text>
+          </Card.Content>
+        </Card>
+
+      </ScrollView>
+    </Layout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f5f5f5' },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  title: { fontSize: 20, fontWeight: 'bold' },
-  label: { marginBottom: 10 },
-  searchBox: { padding: 15, backgroundColor: '#fff', marginBottom: 20, borderRadius: 5 }
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  bannerCard: {
+    backgroundColor: '#1A237E', // Deep Blue
+    borderRadius: 20,
+    marginBottom: 25,
+  },
+  bannerButton: {
+    marginTop: 15,
+    alignSelf: 'flex-start',
+  },
+  sectionTitle: {
+    fontWeight: '700',
+    marginBottom: 15,
+    color: '#333',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  actionCard: {
+    width: '48%',
+    padding: 15,
+    borderRadius: 20,
+    marginBottom: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  iconContainer: {
+    padding: 10,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  actionTitle: {
+    fontWeight: '600',
+  },
+  offerCard: {
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    elevation: 2,
+  },
 });
